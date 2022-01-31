@@ -1,0 +1,11 @@
+{
+    "64_example/advdiff/sim_000000/density_000120.npz": [
+      -3.2793714066058963
+    ],
+    "64_example/jhtdb_isotropic1024coarse/sim_000000/velocity_000000.npz": [
+      0.3434499877909283
+    ],
+    "64_example/waves/sim_000000/flags_000000.npz": [
+      1.9565291723433387
+    ]
+}
