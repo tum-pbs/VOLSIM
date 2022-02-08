@@ -3,7 +3,7 @@ This repository contains the source code for the paper Learning Similarity Metri
 
 *VolSiM* is a metric intended as a comparison method for dense, volumetric, vectorial or scalar data from numerical simulations. It computes a scalar distance value from two inputs that indicates the similarity between them, where a higher value indicates stronger differences. Traditional metrics like L<sup>1</sup> or L<sup>2</sup> distances or the peak signal-to-noise ratio (PSNR) are suboptimal comparison methods for simulation data, as they only consider element-wise comparisons and cannot capture structures on different scales or contextual information. For example, consider a volumetric checkerboard pattern and a version that is translated by one voxel along one dimension. Comparing both element-wise leads to a large distance as all voxels are very different, even though the structure of both patterns is identical. Instead of comparing element-wise, *VolSiM* extracts deep feature maps with a multiscale CNN structure from both inputs and compares them. This means similarity on different scales and recurring structures or patterns are considered in the distance evaluation.
 
-To compare scalar 2D data, you can have a look at our CNN-based metric [*LSiM*](https://github.com/tum-pbs/LSIM) that was specifically designed for this data domain.
+Further information is available at our [project website](https://ge.in.tum.de/publications/2022-volsim-kohl/). To compare scalar 2D data, you can have a look at our CNN-based metric [*LSiM*](https://github.com/tum-pbs/LSIM) that was specifically designed for this data domain.
 
 -----------------------------------------------------------------------------------------------------
 
