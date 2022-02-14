@@ -169,8 +169,8 @@ class DistanceModel(nn.Module):
 
         self.clampWeights()
 
-        outBaseA = self.basenet.forward(dataA)
-        outBaseB = self.basenet.forward(dataB)
+        outBaseA = self.basenet(dataA)
+        outBaseB = self.basenet(dataB)
 
         result = torch.tensor([[0.0]]).cuda() if self.useGPU else torch.tensor([[0.0]])
 
@@ -228,7 +228,7 @@ class DistanceModel(nn.Module):
         sample = {"data": data[None,...], "path": path, "distance": distance[None,...],
                 "indexA" : indexA[None,...], "indexB" : indexB[None,...], "idxMin" : 0, "idxMax" : nPairs}
 
-        output = self.forward(sample)
+        output = self(sample)
         output = output.cpu().detach().view(-1).numpy()
         return output
 
@@ -261,7 +261,7 @@ class DistanceModel(nn.Module):
             data = data.permute(0,4,1,2,3) # change shape to [batch,3,128,128,128]
 
             self.clampWeights()
-            outBase = self.basenet.forward(data)
+            outBase = self.basenet(data)
 
             for j in range( len(outBase) ):
                 self.normalizeTensor(outBase[j], j, updateAcc=True)

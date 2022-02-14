@@ -83,15 +83,15 @@ class Metric(nn.Module):
 
                 xPermA = rescaledA.permute(0,3,1,2)
                 xPermB = rescaledB.permute(0,3,1,2)
-                xResult = self.model.forward(xPermA, xPermB)
+                xResult = self.model(xPermA, xPermB)
 
                 yPermA = rescaledA.permute(1,3,0,2)
                 yPermB = rescaledB.permute(1,3,0,2)
-                yResult = self.model.forward(yPermA, yPermB)
+                yResult = self.model(yPermA, yPermB)
 
                 zPermA = rescaledA.permute(2,3,0,1)
                 zPermB = rescaledB.permute(2,3,0,1)
-                zResult = self.model.forward(zPermA, yPermB)
+                zResult = self.model(zPermA, yPermB)
                 distance[i] = np.mean( (xResult + yResult + zResult) / 3 )
 
             elif self.mode == "LSIM2D":
@@ -101,17 +101,17 @@ class Metric(nn.Module):
                 xPermA = tensA.permute(0,3,1,2)[None,...]
                 xPermB = tensB.permute(0,3,1,2)[None,...]
                 xDict = {"reference": xPermA, "other": xPermB}
-                xResult = self.model.forward(xDict).cpu().numpy()
+                xResult = self.model(xDict).cpu().numpy()
 
                 yPermA = tensA.permute(1,3,0,2)[None,...]
                 yPermB = tensB.permute(1,3,0,2)[None,...]
                 yDict = {"reference": yPermA, "other": yPermB}
-                yResult = self.model.forward(yDict).cpu().numpy()
+                yResult = self.model(yDict).cpu().numpy()
 
                 zPermA = tensA.permute(2,3,0,1)[None,...]
                 zPermB = tensB.permute(2,3,0,1)[None,...]
                 zDict = {"reference": zPermA, "other": zPermB}
-                zResult = self.model.forward(zDict).cpu().numpy()
+                zResult = self.model(zDict).cpu().numpy()
                 distance[i] = np.mean( (xResult + yResult + zResult) / 3 )
 
         return torch.from_numpy(distance).float().view(full.shape[0], -1)
@@ -146,6 +146,6 @@ class Metric(nn.Module):
         sample = {"data": data[None,...], "path": path, "distance": distance[None,...],
                 "indexA" : indexA[None,...], "indexB" : indexB[None,...], "idxMin" : 0, "idxMax" : nPairs}
 
-        output = self.forward(sample)
+        output = self(sample)
         output = output.cpu().detach().view(-1).numpy()
         return output
