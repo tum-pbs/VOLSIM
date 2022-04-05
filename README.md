@@ -41,7 +41,7 @@ python src/distance_example_detailed.py
 
 -----------------------------------------------------------------------------------------------------
 
-## Data Download and Processing
+## Data Generation, Download, and Processing
 **[Archiving our data sets is still in progress, but a download link will be coming soon]**
 
 `copy_data_lowres.py` can used to downsample the simulation resolution of `128x128x128` to the training and evaluation resolution of `64x64x64`. It processes all .npz data files, while creating copies of all supplementary files in the input directory.
@@ -65,7 +65,11 @@ python src/training.py
 The training progress is printed in the console and in addition written to tensorboard event files in the `runs` directory. The event files can be read by opening tensorboard via `tensorboard --logdir=runs`. Running the training script without changes should result in a model with a performance close to our final *VolSiM* metric (when evaluated with the metric evaluation above). But of course, minor deviations are expected due to the random nature of the model initialization and training procedure. The training setup for different model variants are included in `training_iso.py` and as a commented set of parameters in `training.py`.
 
 ## Backpropagation through the Metric
-Backpropagation through the metric network is straightforward by integrating the `DistanceModel` class that derives from `torch.nn.Module` in the target network. Load the trained model weights from the model directory with the `load` method in `DistanceModel` on initialization (see the basic usage above), and freeze all trainable weights of the metric if required. In this case, the `forward` method of the metric (via calling the model object and with appropriate data handling beforehand) must be used instead of `computeDistance` to perform the comparison operation.
+Backpropagation through the metric network is straightforward by integrating the `DistanceModel` class that derives from `torch.nn.Module` in the target network. Load the trained model weights from the model directory with the `load` method in `DistanceModel` on initialization (see Basic Usage above), and freeze all trainable weights of the metric if required. In this case, the metric model should be called directly (with appropriate data handling beforehand) instead of using `computeDistance` to perform the comparison operation. An example for this process based on a simple Autoencoder can be found in `backprop_example.py`:
+```
+python src/backprop_example.py
+```
+
 
 -----------------------------------------------------------------------------------------------------
 
