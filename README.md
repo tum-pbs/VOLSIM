@@ -46,10 +46,10 @@ python src/distance_example_detailed.py
 ### Downloading our data
 **[Archiving our data sets is still in progress, but a download link will be coming soon]**
 
-<details>
-<summary>Click to expand detailed data generation instructions</summary>
-
 ### Generation from MantaFlow
+<details>
+<summary>Click to expand detailed MantaFlow instructions</summary>
+
 To generate data with the fluid solver [MantaFlow](http://mantaflow.com/), perform the following steps:
 1. Download the [MantaFlow source code](https://github.com/tum-pbs/mantaflow) and follow the [installation instructions](http://mantaflow.com/install.html). **Our additional code assumes the usage of commit [3a74f09](https://github.com/tum-pbs/mantaflow/tree/3a74f0951ade7e7bb61515acd0cfdf9964757a73)! Newer commits might still work, but may cause problems.**
 2. Ensure that numpy and imageio are installed in the python environment used for MantaFlow.
@@ -60,30 +60,46 @@ To generate data with the fluid solver [MantaFlow](http://mantaflow.com/), perfo
 4. Copy the `data/generation_scripts/MantaFlow/scripts3D` folder to the root of your MantaFlow directory.
 5. This scripts folder contains the MantaFlow scene files for each data set (.py files), that can be run in the same way as normal MantaFlow scene files. The corresponding batch generation scripts (.sh files) simply run each scene multiple times with different parameters to build a full data set. If one batch file creates different data sets, e.g. a training and a test set variant, you can find each set of parameters as a comment in the batch file.
 6. As the liquid and smoke generation has to run an individual simulation for each sequence element, the `data/generation_scripts/MantaFlow/scripts3D/compactifyData.py` scene file combines the existing individual numpy arrays to ensure a coherent data set structure. It should be run like other scene files as a post-processing step once the liquid or smoke generation is complete.
+</details>
+
 
 
 ### Generation from PhiFlow
+<details>
+<summary>Click to expand detailed PhiFlow instructions</summary>
+
 To generate data with the fluid solver [PhiFlow](https://ge.in.tum.de/research/phiflow/), perform the following steps:
 1. Download the [PhiFlow source code](https://github.com/tum-pbs/PhiFlow) and follow the [installation instructions](https://tum-pbs.github.io/PhiFlow/Installation_Instructions.html), using the custom CUDA kernels is highly recommended for performance reasons. **Our additional code assumes the usage of commit [f3090a6](https://github.com/tum-pbs/PhiFlow/tree/f3090a6963a2dc08df9fb39ce270cc30107d69b6)! Substantially newer commits will not work, due to larger architecture changes in following versions.**
 2. Ensure that numpy and imageio are installed in the python environment used for PhiFlow.
 3. Add our implementation of some additional functionality to the solver by copying the all files from the `data/generation_scripts/PhiFlow` folder to the `demos` folder in your PhiFlow directory.
 4. The copied files contain the PhiFlow scene files for each data set (.py files), that can be run in the same way as normal PhiFlow scene files in the `demos` folder. Note, that the `data/generation_scripts/PhiFlow/varied_sim_utils.py` file only contains import utilities and can not be run individually. The corresponding batch generation scripts (.sh files) simply run each scene multiple times with different parameters to build a full data set. If one batch file creates different data sets, e.g. a training and a test set variant, you can find each set of parameters as a comment in the batch file.
+</details>
+
 
 
 ### Generation from the Johns Hopkins Turbulence Database (JHTDB)
+<details>
+<summary>Click to expand detailed JHTDB instructions</summary>
+
 To extract sequences from the [Johns Hopkins Turbulence Database](http://turbulence.pha.jhu.edu/), the required steps are:
 1. Install the [pyJHTDB package](https://github.com/idies/pyJHTDB) for local usage.
 2. Request an [authorization token](http://turbulence.pha.jhu.edu/authtoken.aspx) to ensure access to the full data base.
 3. Add your authorization token to the script `data/generation_scripts/convert_JHTDB.py`, adjust the settings as necessary, and run the script to download and convert the corresponding regions of the DNS data.
+</details>
+
 
 
 ### Generation from ScalarFlow
+<details>
+<summary>Click to expand detailed ScalarFlow instructions</summary>
+
 To process the [ScalarFlow](https://ge.in.tum.de/publications/2019-scalarflow-eckert/) data set into sequences suitable for metric evaluations, the following steps are necessary:
 1. Download the full data set from the [mediatum repository](https://mediatum.ub.tum.de/1521788) and extract it at the target destination.
 2. Add the root folder of the extracted data set as the input path in the `data/generation_scripts/convert_scalarFlow.py` script.
 3. Adjust the conversion settings like output path or resolution in the script if necessary, and run it to generate the data set.
-
 </details>
+
+
 
 ### General Data Post-Processing
 `plot_data_vis.py` contains simple plotting functionality to visualize individual data samples and the corresponding ground truth distances. `copy_data_lowres.py` can be used to downsample the generation resolution of `128x128x128` to the training and evaluation resolution of `64x64x64`. It processes all .npz data files, while creating copies of all supplementary files in the input directory.
