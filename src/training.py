@@ -30,6 +30,13 @@ if __name__ == '__main__':
     #            dataCropRandom=False, dataScaleInference=64, dataConvertMode="none", mBase="alex_5_1",
     #            mFeatDist="L2Sqrt", mLinInit=0.05, mLinDropout=True, mNormMode="normMeanLayerGlobal")
 
+    #modelName = "MS_identity"
+    #hp = Params(batch=1, epochs=40, lrBase=0.00010, lrDecFac=1.0, lrDecTimes=1.0, weightDecay=0.0,
+    #            gtDistMode="lin", corHistoryMode="spearman", lossFacPearsonCorr=0.7, lossFacMSE=1.0,
+    #            lossOnlineMean=True, lossCorrAggregate=True, sampleSlicing=55, dataAugmentation=True, dataCrop=64,
+    #            dataCropRandom=False, dataScaleInference=64, dataConvertMode="none", mBase="multiScaleSkip_16_1",
+    #            mFeatDist="L2Sqrt", mLinInit=0.05, mLinDropout=True, mNormMode="normMeanLayerGlobal")
+
     #modelName = "MS_noSkip"
     #hp = Params(batch=1, epochs=40, lrBase=0.00010, lrDecFac=1.0, lrDecTimes=1.0, weightDecay=0.0,
     #            gtDistMode="fit2", corHistoryMode="spearman", lossFacPearsonCorr=0.7, lossFacMSE=1.0,

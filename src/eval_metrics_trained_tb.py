@@ -17,13 +17,14 @@ volsim = DistanceModel.load("models/VolSiM.pth", useGPU=useGPU)
 cnnTrained = DistanceModel.load("models/CNN_trained.pth", useGPU=useGPU)
 msRand = DistanceModel.load("models/MS_rand.pth", useGPU=useGPU)
 cnnRand = DistanceModel.load("models/CNN_rand.pth", useGPU=useGPU)
+msIdentity = DistanceModel.load("models/MS_identity.pth", useGPU=useGPU)
 msNoSkip = DistanceModel.load("models/MS_noSkip.pth", useGPU=useGPU)
 ms3Scales = DistanceModel.load("models/MS_3scales.pth", useGPU=useGPU)
 ms5Scales = DistanceModel.load("models/MS_5scales.pth", useGPU=useGPU)
 msAddedIso = DistanceModel.load("models/MS_addedIso.pth", useGPU=useGPU)
 msOnlyIso = DistanceModel.load("models/MS_onlyIso.pth", useGPU=useGPU)
 metrics = {"VolSiM":volsim, "CNN_trained":cnnTrained, "MS_rand":msRand, "CNN_rand":cnnRand,
-            "MS_noSkip":msNoSkip, "MS_3scales":ms3Scales, "MS_5scales":ms5Scales,
+            "MS_identity":msIdentity, "MS_noSkip":msNoSkip, "MS_3scales":ms3Scales, "MS_5scales":ms5Scales,
             "MS_addedIso":msAddedIso, "MS_onlyIso":msOnlyIso}
 
 dataSize = 64
