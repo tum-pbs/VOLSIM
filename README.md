@@ -44,7 +44,39 @@ python src/distance_example_detailed.py
 ## Data Generation, Download, and Processing
 
 ### Downloading our data
-**[Archiving our data sets is still in progress, but a download link will be coming soon]**
+Our data sets at resolution $64^3 (archive size ~89 GB, uncompressed data ~500 GB) can be downloaded via any web browser, `ftp`, or `rsync` here: [https://doi.org/10.14459/2023mp1703144](https://doi.org/10.14459/2023mp1703144). Use this command to directly download all data sets (**rsync password: m1703144**):
+```
+rsync -P rsync://m1703144@dataserv.ub.tum.de/m1703144/* ./data
+```
+It is recommended to check the .zip archives for corruption, by comparing the SHA512 hash of each downloaded file that can be computed via
+```
+sha512sum data/*.zip
+```
+with the corresponding content of the checksum file downloaded to `data/checksums.sha512`. If the hashes do not match, restart the download or try a different download method. Once the download is complete, the data set archives can be extracted with:
+```
+unzip -o -d data "data/*.zip"
+```
+
+Furthermore, it is also possible to separately download the individiual sub data sets by replacing the `*` in all three commands above with one of the following archive names:
+
+Archive Name | Size | Description
+---|---|---
+train_adv.zip | 5.9 GB | Training + validation set $\texttt{Adv}$ with data from the Advection-Diffusion equation
+train_bur.zip | 16.0 GB | Training + validation set $\texttt{Bur}$ with data from the Burgers' equation
+train_liq.zip | 5.7 GB | Training + validation set $\texttt{Liq}$ with data from liquid simulations
+train_smo.zip | 17.0 GB | Training + validation set $\texttt{Smo}$ with data from smoke simulations
+test_advd.zip | 0.73 GB | Test set $\texttt{AdvD}$ with data from the Advection-Diffusion equation
+test_liqn.zip | 1.8 GB | Test set $\texttt{LiqN}$ with data from liquid simulations
+test_sha.zip | 0.64 GB | Test set $\texttt{Sha}$ with moving shapes data
+test_wav.zip | 1.3 GB | Test set $\texttt{Wav}$ with moving damped wave data
+test_iso.zip | 1.8 GB | Test set $\texttt{Iso}$ with JHTDB data of isotropic turbulence
+test_cha.zip | 1.8 GB | Test set $\texttt{Cha}$ with JHTDB data from a channel flow
+test_mhd.zip | 1.8 GB | Test set $\texttt{Mhd}$ with JHTDB data of magneto-hydrodynamic turbulence
+test_tra.zip | 1.8 GB | Test set $\texttt{Tra}$ with JHTDB data from a transitional boundary layer
+test_sf.zip | 6.2 GB | Test set $\texttt{SF}$ with data from ScalarFlow
+additional_iso.zip | 11.0 GB | Additional $\texttt{Iso}$ data to train the MS_addedIso and MS_onlyIso models
+additional_isoExtra.zip | 18.0 GB | Additional $\texttt{Iso}$ data to train the MS_onlyIso model
+(checksums.sha512) | (4.0 KB) | (Checksum file only used to check archive validity)
 
 ### Generation from MantaFlow
 <details>
@@ -111,7 +143,7 @@ To process custom raw simulation data, `compute_nonlinear_dist_coef.py` can be u
 -----------------------------------------------------------------------------------------------------
 
 ## Metric Comparison
-Once the data sets are available to download, the performance of different metrics (element-wise and CNN-based) on our data can be compared using the metric evaluations in `eval_metrics_shallow_tb.py` and `eval_metrics_trained_tb.py`:
+With the downloaded data sets, the performance of different metrics (element-wise and CNN-based) can be compared using the metric evaluations in `eval_metrics_shallow_tb.py` and `eval_metrics_trained_tb.py`:
 ```
 python src/eval_metrics_shallow_tb.py
 python src/eval_metrics_trained_tb.py
@@ -119,7 +151,7 @@ python src/eval_metrics_trained_tb.py
 Both scripts compute distances for various metrics on our data sets, and evaluate them against the proposed ground truth distance model. All results are printed in the console and in addition written to tensorboard event files in the `runs` directory. The event files can be read by opening tensorboard via `tensorboard --logdir=runs`. Running the metric evaluation without changes should result in values similar to Table 1 in our paper.
 
 ## Re-training the Model
-Once the data sets are available to download, the metric can be re-trained from scratch via `training.py`:
+The metric can be re-trained from scratch with the downloaded data sets via `training.py`:
 ```
 python src/training.py
 ```
